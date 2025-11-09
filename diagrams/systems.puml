@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Container(frontend, "NextJS/React", "Frontend", "Frontend web app (landing/account)")
+Container(backend, "Spring Boot", "Backend API", "Handles users' settings, payments")
+Container(tgbot, "Telegram Bot", "@apogener", "Telegram bot for getting ideas from user")
+System_Ext(channel, "User's Telegram channel", "User's Telegram channel to post into")
+System_Ext(ai, "OpenAI/Gemini/Claude", "AI-provider")
+ContainerDb(db, "PostgreSQL", "Database", "Stores users' settings and payment info")
+
+Person(user, "User", "A user of the system")
+
+Rel(user, frontend, "Uses")
+Rel(frontend, backend, "Calls API")
+Rel(tgbot, backend, "Calls API")
+Rel(backend, ai, "Generates posts")
+Rel(backend, db, "Reads from and writes to")
+Rel(tgbot, channel, "Sends messages to")
+
+
+@enduml
